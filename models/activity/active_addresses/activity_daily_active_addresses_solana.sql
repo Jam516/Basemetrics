@@ -7,7 +7,7 @@
 
 SELECT 
 ACTIVITY_DATE as date,
-SUCCESS_NON_VOTING_TX_COUNT as num_txns
+ACTIVE_NON_VOTER_ADDRESSES as active_addresses
 FROM {{ source('solana_metrics', 'overview') }}
 {% if is_incremental() %}
 WHERE ACTIVITY_DATE >= CURRENT_DATE() - interval '3 day' 
