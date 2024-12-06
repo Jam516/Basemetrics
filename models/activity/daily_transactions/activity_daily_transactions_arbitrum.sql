@@ -8,7 +8,7 @@
 SELECT 
 DATE_TRUNC('day',BLOCK_TIMESTAMP) as day,
 COUNT(HASH) as num_txns
-FROM {{ source('base_raw', 'transactions') }}
+FROM {{ source('arbitrum_raw', 'transactions') }}
 {% if is_incremental() %}
 WHERE DATE_TRUNC('day',BLOCK_TIMESTAMP) >= CURRENT_DATE() - interval '3 day' 
 AND DATE_TRUNC('day',BLOCK_TIMESTAMP) < CURRENT_DATE() 
