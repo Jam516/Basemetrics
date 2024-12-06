@@ -17,12 +17,5 @@ models:
     - name: activity_daily_transactions_arbitrum
       description: "Daily number of transactions on Arbitrum"
       columns:
-          - &day
-            name: day
-            description: "The day of the transaction"
-            tests:
-                - unique
-                - not_null
-          - &num_txns
-            name: num_txns
-            description: "The number of transactions"
+          - *day
+          - *num_txns
