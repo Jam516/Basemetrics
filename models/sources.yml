@@ -88,7 +88,7 @@ sources:
         loaded_at_field: block_timestamp  
 
   - name: solana_raw
-    database: solana
+    database: SOLANA__ENRICHED
     schema: raw
     freshness: # default freshness
       warn_after: { count: 12, period: hour }
