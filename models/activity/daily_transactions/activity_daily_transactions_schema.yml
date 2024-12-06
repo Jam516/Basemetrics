@@ -4,9 +4,9 @@ models:
     - name: activity_daily_transactions_base
       description: "Daily number of transactions on Base"
       columns:
-          - &day
-            name: day
-            description: "The day of the transaction"
+          - &date
+            name: date
+            description: "The date of the transaction"
             tests:
                 - unique
           - &num_txns
@@ -16,5 +16,23 @@ models:
     - name: activity_daily_transactions_arbitrum
       description: "Daily number of transactions on Arbitrum"
       columns:
-          - *day
+          - *date
           - *num_txns
+
+    - name: activity_daily_transactions_bsc
+      description: "Daily number of transactions on BSC"
+      columns:
+          - *date
+          - *num_txns        
+
+    - name: activity_daily_transactions_solana
+      description: "Daily number of transactions on Solana"
+      columns:
+          - *date
+          - *num_txns  
+
+    - name: activity_daily_transactions_tron
+      description: "Daily number of transactions on Tron"
+      columns:
+          - *date
+          - *num_txns 
