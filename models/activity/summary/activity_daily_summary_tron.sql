@@ -1,0 +1,25 @@
+{{ config
+(
+    materialized = 'incremental',
+    unique_key = 'date'
+)
+}}
+
+
+SELECT 
+DATE_TRUNC('day',BLOCK_TIMESTAMP) as DATE,
+'tron' AS CHAIN,
+COUNT(HASH) AS NUM_TXNS,
+COUNT(DISTINCT FROM_ADDRESS) AS ACTIVE_ADDRESSES,
+COUNT(HASH) / 86400 AS TPS,
+null AS GAS_USED_PER_SECOND
+FROM TRON.RAW.TRANSACTIONS
+{% if is_incremental() %}
+WHERE DATE_TRUNC('DAY',BLOCK_TIMESTAMP) >= CURRENT_DATE() - interval '3 day'
+AND DATE_TRUNC('DAY',BLOCK_TIMESTAMP) < CURRENT_DATE() 
+{% endif %}
+{% if not is_incremental() %}
+WHERE DATE_TRUNC('DAY',BLOCK_TIMESTAMP) >= TO_TIMESTAMP('2024-09-01', 'YYYY-MM-DD') 
+AND DATE_TRUNC('DAY',BLOCK_TIMESTAMP) < CURRENT_DATE() 
+{% endif %}
+GROUP BY 1,2
