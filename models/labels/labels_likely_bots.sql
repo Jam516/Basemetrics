@@ -53,3 +53,9 @@ WITH sender_transfer_rates AS (
                 OR AVG(wk_txs) >= 1000 --frequency (avg 1k txs per week)
                 OR AVG(pct_weekly_hours_active) > 0.5 -- aliveness: transacting at least 50% of hours per week
                 OR MAX(pct_weekly_hours_active) > 0.95 -- aliveness: at peack, transacted at least 95% of hours in a week
+                OR 
+                (
+                    cast(COUNT(*) as double) /
+                        ( cast( DATEDIFF('second', MIN(min_block_time), MAX(max_block_time)) as double) / (60.0*60.0) ) >= 25
+                    AND SUM(wk_txs) >= 100
+                    ) --number of txns / number of hours > 25 per hour AND total txns > 100
